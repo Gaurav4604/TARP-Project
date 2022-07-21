@@ -1,18 +1,18 @@
-import { Stack } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Tiffin from "./components/Tiffin";
+import { Provider } from "react-redux";
+import { applyMiddleware, legacy_createStore as createStore } from "redux";
+import App from "./App";
+import reduxThunk from "redux-thunk";
+
+import store from "./redux/store";
+
+const reduxStore = createStore(store, applyMiddleware(reduxThunk));
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
-  <Stack
-    sx={{
-      width: "100vw",
-      height: "100vh",
-    }}
-    alignItems="center"
-    justifyContent="center"
-  >
-    <Tiffin />
-  </Stack>
+  <Provider store={reduxStore}>
+    <App />
+  </Provider>
 );

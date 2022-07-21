@@ -1,4 +1,6 @@
-const initialState = {
+import { createTheme } from "@mui/material";
+
+const appTheme = createTheme({
   components: {
     MuiStack: {
       variants: [
@@ -17,13 +19,6 @@ const initialState = {
       ],
     },
   },
-};
+});
 
-const themeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
-export default themeReducer;
+export default appTheme;
