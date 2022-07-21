@@ -2,19 +2,28 @@ import { createTheme, Stack, ThemeProvider } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import "./App.css";
+import ComponentCard from "./components/utils/components/ComponentCard";
 import appTheme from "./components/utils/Theme";
+import config from "./redux/Utils/componentConfig";
+
+const renderCards = () => {
+  return config.root.map((component, index) => (
+    <ComponentCard {...component} key={index} />
+  ));
+};
 
 const App = ({ theme }) => {
-  console.log(createTheme(theme));
   return (
-    <Stack direction="row">
-      <ThemeProvider theme={appTheme}>
-        <ThemeProvider theme={theme}>
-          <Stack id="builder-page"></Stack>
-        </ThemeProvider>
+    <ThemeProvider theme={appTheme}>
+      <Stack direction="row" id="application">
+        <Stack id="builder-page">
+          <ThemeProvider theme={createTheme(theme)}>
+            {renderCards()}
+          </ThemeProvider>
+        </Stack>
         <Stack id="editor-panel" />
-      </ThemeProvider>
-    </Stack>
+      </Stack>
+    </ThemeProvider>
   );
 };
 

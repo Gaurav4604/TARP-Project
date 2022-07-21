@@ -1,7 +1,13 @@
+import { Component } from "react";
 import types from "./types";
 
 const initialState = {
-  components: [],
+  components: [
+    {
+      root: Component,
+      components: [{}],
+    },
+  ],
 };
 
 const stateReducer = (state = initialState, action) => {
