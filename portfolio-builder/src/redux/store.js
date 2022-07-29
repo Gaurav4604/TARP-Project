@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import ComponentTree from "./ComponentTree/ComponentTree";
+import ComponentTreeReducer from "./ComponentTree/ComponentTreeReducer";
 import themeReducer from "./Theme/themeReducer";
 import utilsReducer from "./Utils/UtilsReducer";
 
 const store = combineReducers({
-  componentTree: ComponentTree,
+  componentTree: ComponentTreeReducer,
   theme: themeReducer,
   utils: utilsReducer,
 });

@@ -1,18 +1,28 @@
 import { Layers, SportsMartialArts, ThreeDRotation } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 
 const config = {
   root: [
     {
-      caption: "Composition Stack",
+      caption: "Body Section",
       icon: Layers,
+      component: {
+        componentJSX: Stack,
+      },
     },
     {
       caption: "Hero Section",
       icon: SportsMartialArts,
+      component: {
+        componentJSX: Stack,
+      },
     },
     {
-      caption: "3D container",
+      caption: "Contact Section",
       icon: ThreeDRotation,
+      component: {
+        componentJSX: Stack,
+      },
     },
   ],
 };

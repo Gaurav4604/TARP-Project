@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import React from "react";
 
+import { connect } from "react-redux";
+import { addComponent } from "../../../redux/ComponentTree/ComponentTreeActions";
+
 const cardTheme = createTheme({
   typography: {
     allVariants: {
@@ -88,11 +91,20 @@ const cardTheme = createTheme({
   },
 });
 
-const ComponentCard = ({ icon, caption }) => {
-  const generateId = (caption) => caption.toLowerCase().split(" ").join("-");
+const ComponentCard = ({ icon, component, caption, addComponent }) => {
+  const generateClassName = (caption) =>
+    caption.toLowerCase().split(" ").join("-");
   return (
     <ThemeProvider theme={cardTheme}>
-      <Card id={generateId(caption)}>
+      <Card
+        id={generateClassName(caption)}
+        onClick={() =>
+          addComponent({
+            ...component,
+            componentClassName: generateClassName(caption),
+          })
+        }
+      >
         <Stack id="container">
           {React.createElement(icon)}
           <Typography>{caption}</Typography>
@@ -105,4 +117,4 @@ const ComponentCard = ({ icon, caption }) => {
   );
 };
 
-export default ComponentCard;
+export default connect(null, { addComponent })(ComponentCard);

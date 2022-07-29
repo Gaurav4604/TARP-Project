@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import "./App.css";
 import ComponentCard from "./components/utils/components/ComponentCard";
 import appTheme from "./components/utils/Theme";
+import ListRenderer from "./ListRenderer";
 import config from "./redux/Utils/componentConfig";
 
 const renderCards = () => {
-  return config.root.map((component, index) => (
-    <ComponentCard {...component} key={index} />
+  return config.root.map((component) => (
+    <ComponentCard {...component} key={component.caption} />
   ));
 };
 
@@ -19,6 +20,7 @@ const App = ({ theme }) => {
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>
             {renderCards()}
+            <ListRenderer />
           </ThemeProvider>
         </Stack>
         <Stack id="editor-panel" />
@@ -27,10 +29,10 @@ const App = ({ theme }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ theme }) => {
   return {
-    theme: state.theme,
+    theme,
   };
 };
 
-export default connect(mapStateToProps, {})(App);
+export default connect(mapStateToProps)(App);

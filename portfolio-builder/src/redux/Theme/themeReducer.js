@@ -4,15 +4,33 @@ const initialState = {
       variants: [
         {
           props: {
-            id: "builder-page",
+            className: "hero-section",
           },
-          style: { flex: "1", backgroundColor: "red", height: "100vh" },
+          style: {
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "blue",
+          },
         },
         {
           props: {
-            id: "editor-panel",
+            className: "body-section",
           },
-          style: { flex: "0.3", backgroundColor: "blue", height: "100vh" },
+          style: {
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "red",
+          },
+        },
+        {
+          props: {
+            className: "contact-section",
+          },
+          style: {
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "green",
+          },
         },
       ],
     },
