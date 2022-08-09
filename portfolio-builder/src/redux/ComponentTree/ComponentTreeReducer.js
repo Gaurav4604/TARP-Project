@@ -1,11 +1,7 @@
 import types from "./types";
 
 const initialState = {
-  components: [
-    {
-      components: [],
-    },
-  ],
+  components: [],
   stack: {
     "hero-section": false,
     "contact-section": false,

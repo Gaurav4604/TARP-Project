@@ -26,32 +26,80 @@ export const addComponent = (component) => {
         case 0:
           if (!stack["hero-section"]) {
             stack["hero-section"] = true;
-            components.push({
-              className: componentClassName,
-              componentJSX,
-              nodeIndex: 0,
-              id: null,
-            });
+            components = [
+              {
+                className: componentClassName,
+                componentJSX,
+                nodeIndex: 0,
+                id: componentClassName,
+              },
+              ...components,
+            ];
           }
           break;
         case 2:
           if (!stack["contact-section"]) {
             stack["contact-section"] = true;
-            components.splice(components.length - 1, 0, {
-              className: componentClassName,
-              componentJSX,
-              nodeIndex: 0,
-              id: null,
-            });
+            components = [
+              ...components,
+              {
+                className: componentClassName,
+                componentJSX,
+                nodeIndex: 0,
+                id: componentClassName,
+              },
+            ];
           }
           break;
         default:
-          components.splice(components.length - 2, 0, {
-            className: componentClassName,
-            id: idExtensionGenerator(),
-            componentJSX,
-            nodeIndex: 0,
-          });
+          switch (components.length) {
+            case 0:
+              components.push({
+                className: componentClassName,
+                id: idExtensionGenerator(),
+                componentJSX,
+                nodeIndex: 0,
+              });
+              break;
+            default:
+              if (components[components.length - 1].id === constants[2]) {
+                switch (components.length) {
+                  case 1:
+                    components.splice(0, 0, {
+                      className: componentClassName,
+                      id: idExtensionGenerator(),
+                      componentJSX,
+                      nodeIndex: 0,
+                    });
+                    break;
+                  default:
+                    const start = components.slice(0, components.length - 1);
+                    const end = components.slice(
+                      components.length - 1,
+                      components.length
+                    );
+                    components = [
+                      ...start,
+                      {
+                        className: componentClassName,
+                        id: idExtensionGenerator(),
+                        componentJSX,
+                        nodeIndex: 0,
+                      },
+                      ...end,
+                    ];
+                    break;
+                }
+              } else {
+                components.push({
+                  className: componentClassName,
+                  id: idExtensionGenerator(),
+                  componentJSX,
+                  nodeIndex: 0,
+                });
+              }
+              break;
+          }
           break;
       }
     }

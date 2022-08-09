@@ -16,14 +16,14 @@ const renderCards = () => {
 const App = ({ theme }) => {
   return (
     <ThemeProvider theme={appTheme}>
-      <Stack direction="row" id="application">
+      <Stack id="application">
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>
-            {renderCards()}
             <ListRenderer />
           </ThemeProvider>
         </Stack>
-        <Stack id="editor-panel" />
+
+        <Stack id="editor-panel">{renderCards()}</Stack>
       </Stack>
     </ThemeProvider>
   );

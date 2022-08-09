@@ -4,15 +4,15 @@ import { Stack } from "@mui/material";
 const config = {
   root: [
     {
-      caption: "Body Section",
-      icon: Layers,
+      caption: "Hero Section",
+      icon: SportsMartialArts,
       component: {
         componentJSX: Stack,
       },
     },
     {
-      caption: "Hero Section",
-      icon: SportsMartialArts,
+      caption: "Body Section",
+      icon: Layers,
       component: {
         componentJSX: Stack,
       },
