@@ -1,29 +1,40 @@
 import { createTheme, Stack, ThemeProvider } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import "./App.css";
-import ComponentCard from "./components/utils/components/ComponentCard";
+import ComponentContextMenu from "./components/utils/ComponentContextMenu";
+import ComponentPanel from "./components/utils/ComponentPanel";
 import appTheme from "./components/utils/Theme";
 import ListRenderer from "./ListRenderer";
-import config from "./redux/Utils/componentConfig";
+import { toggleContextMenu, captureMousePos } from "./redux/Utils/UtilsActions";
 
-const renderCards = () => {
-  return config.root.map((component) => (
-    <ComponentCard {...component} key={component.caption} />
-  ));
-};
+const App = ({ theme, toggleContextMenu, captureMousePos }) => {
+  useEffect(() => {
+    const stateMouseMove = (e) => captureMousePos(e);
 
-const App = ({ theme }) => {
+    window.addEventListener("mousemove", stateMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", stateMouseMove);
+    };
+  }, []);
+
   return (
     <ThemeProvider theme={appTheme}>
-      <Stack id="application">
+      <Stack
+        id="application"
+        onContextMenu={(e) => {
+          toggleContextMenu(true);
+          e.preventDefault();
+        }}
+      >
+        <ComponentContextMenu />
+        <ComponentPanel />
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>
             <ListRenderer />
           </ThemeProvider>
         </Stack>
-
-        <Stack id="editor-panel">{renderCards()}</Stack>
       </Stack>
     </ThemeProvider>
   );
@@ -35,4 +46,6 @@ const mapStateToProps = ({ theme }) => {
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { toggleContextMenu, captureMousePos })(
+  App
+);

@@ -13,6 +13,14 @@ import { connect } from "react-redux";
 import { addComponent } from "../../../redux/ComponentTree/ComponentTreeActions";
 
 const cardTheme = createTheme({
+  palette: {
+    primary: {
+      frames: "#A66CFF",
+      molecules: "#9C9EFE",
+      atoms: "#AFB4FF",
+      main: "#fff",
+    },
+  },
   typography: {
     allVariants: {
       userSelect: "none",
@@ -31,11 +39,12 @@ const cardTheme = createTheme({
           boxShadow: "none",
           position: "relative",
           transition: "all 0.2s ease",
+          border: "0.1rem dashed white",
           "&:active": {
             transform: "scale(0.9)",
           },
           "&:hover": {
-            border: "0.1rem dashed black",
+            border: "0.3rem dashed white",
           },
           "&:hover #container": {
             opacity: 0,
@@ -47,11 +56,34 @@ const cardTheme = createTheme({
           },
         }),
       },
+      variants: [
+        {
+          props: {
+            className: "frames",
+          },
+          style: sx({
+            bgcolor: "primary.frames",
+          }),
+        },
+        {
+          props: { className: "molecules" },
+          style: sx({
+            bgcolor: "primary.molecules",
+          }),
+        },
+        {
+          props: { className: "atoms" },
+          style: sx({
+            bgcolor: "primary.atoms",
+          }),
+        },
+      ],
     },
     MuiTypography: {
       styleOverrides: {
         root: {
           fontFamily: "Poppins, sans-serif",
+          color: "white",
           fontWeight: "600",
           fontSize: "0.9rem",
           textAlign: "center",
@@ -71,6 +103,9 @@ const cardTheme = createTheme({
             alignItems: "center",
             justifyContent: "center",
             opacity: 1,
+            "& .MuiSvgIcon-root": sx({
+              color: "white",
+            }),
           }),
         },
         {
@@ -84,6 +119,9 @@ const cardTheme = createTheme({
             alignItems: "center",
             justifyContent: "center",
             opacity: 0,
+            "& .MuiSvgIcon-root": sx({
+              color: "white",
+            }),
           }),
         },
       ],
@@ -91,17 +129,23 @@ const cardTheme = createTheme({
   },
 });
 
-const ComponentCard = ({ icon, component, caption, addComponent }) => {
-  const generateClassName = (caption) =>
-    caption.toLowerCase().split(" ").join("-");
+const ComponentCard = ({
+  icon,
+  component,
+  caption,
+  addComponent,
+  componentGroup,
+}) => {
+  const generateId = (caption) => caption.toLowerCase().split(" ").join("-");
   return (
     <ThemeProvider theme={cardTheme}>
       <Card
-        id={generateClassName(caption)}
+        id={generateId(caption)}
+        className={componentGroup}
         onClick={() =>
           addComponent({
             ...component,
-            componentClassName: generateClassName(caption),
+            componentClassName: generateId(caption),
           })
         }
       >

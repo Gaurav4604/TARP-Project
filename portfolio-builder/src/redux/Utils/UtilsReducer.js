@@ -3,11 +3,20 @@ import types from "./types";
 const initialState = {
   editorOpen: false,
   componentDrawerOpen: false,
-  editMode: false,
+  coordinates: {},
+  contextMenu: {
+    open: false,
+    coordinates: {},
+  },
 };
 
 const utilsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.MOUSE_POS_CAPTURE:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case types.TOGGLE_EDITOR:
       return {
         ...state,
@@ -18,10 +27,12 @@ const utilsReducer = (state = initialState, action) => {
         ...state,
         componentDrawerOpen: action.payload,
       };
-    case types.TOGGLE_EDIT_MODE:
+    case types.TOGGLE_CONTEXT_MENU:
       return {
         ...state,
-        editMode: action.payload,
+        contextMenu: {
+          ...action.payload,
+        },
       };
     default:
       return state;

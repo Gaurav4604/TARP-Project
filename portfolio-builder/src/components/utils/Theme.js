@@ -17,7 +17,8 @@ const appTheme = createTheme({
             width: "100vw",
             height: "100vh",
             overflow: "scroll",
-            backgroundColor: "grey",
+            backgroundColor: "white",
+            cursor: "context-menu",
           },
         },
         {
@@ -27,12 +28,6 @@ const appTheme = createTheme({
           style: {
             width: "70vw",
           },
-        },
-        {
-          props: {
-            id: "editor-panel",
-          },
-          style: { flex: "0.3", height: "100vh", position: "absolute" },
         },
       ],
     },

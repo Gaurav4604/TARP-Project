@@ -2,7 +2,7 @@ import { Layers, SportsMartialArts, ThreeDRotation } from "@mui/icons-material";
 import { Stack } from "@mui/material";
 
 const config = {
-  root: [
+  frames: [
     {
       caption: "Hero Section",
       icon: SportsMartialArts,

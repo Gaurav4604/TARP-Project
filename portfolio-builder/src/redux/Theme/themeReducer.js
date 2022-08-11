@@ -7,7 +7,6 @@ const initialState = {
             className: "hero-section",
           },
           style: {
-            display: "block",
             width: "100%",
             height: "500px",
             backgroundColor: "blue",
@@ -18,7 +17,6 @@ const initialState = {
             className: "body-section",
           },
           style: {
-            display: "block",
             width: "100%",
             height: "500px",
             backgroundColor: "red",
@@ -29,7 +27,6 @@ const initialState = {
             className: "contact-section",
           },
           style: {
-            display: "block",
             width: "100%",
             height: "500px",
             backgroundColor: "green",
