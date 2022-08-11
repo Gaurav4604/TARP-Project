@@ -17,6 +17,7 @@ const App = ({ theme, toggleContextMenu, captureMousePos }) => {
     return () => {
       window.removeEventListener("mousemove", stateMouseMove);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
