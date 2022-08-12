@@ -6,6 +6,8 @@ const initialState = {
   coordinates: {},
   contextMenu: {
     open: false,
+    componentContextAnchor: null,
+    metadata: {},
     coordinates: {},
   },
 };
@@ -28,9 +30,11 @@ const utilsReducer = (state = initialState, action) => {
         componentDrawerOpen: action.payload,
       };
     case types.TOGGLE_CONTEXT_MENU:
+      console.log(action.payload);
       return {
         ...state,
         contextMenu: {
+          ...state.contextMenu,
           ...action.payload,
         },
       };

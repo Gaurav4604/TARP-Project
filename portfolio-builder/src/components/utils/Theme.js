@@ -26,7 +26,7 @@ const appTheme = createTheme({
             id: "builder-page",
           },
           style: {
-            width: "70vw",
+            width: "80vw",
           },
         },
       ],

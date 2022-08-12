@@ -2,18 +2,28 @@ import React from "react";
 import { connect } from "react-redux";
 
 const componentTreeRenderer = (components) => {
-  return components.map(({ componentJSX, id, className }) => {
+  return components.map((component) => {
+    const {
+      componentJSX,
+      id = "",
+      className = "",
+      dataProps = {},
+      components = [],
+    } = component;
+
     if (componentJSX) {
       return React.createElement(componentJSX, {
         className,
         key: `${className} + ${id}`,
         id,
+        children: componentTreeRenderer(components),
+        ...dataProps,
       });
     } else return undefined;
   });
 };
 
-const ListRenderer = ({ components }) => {
+const TreeRenderer = ({ components }) => {
   return componentTreeRenderer(components);
 };
 
@@ -24,4 +34,4 @@ const mapStateToProps = ({ componentTree }) => {
   };
 };
 
-export default connect(mapStateToProps)(ListRenderer);
+export default connect(mapStateToProps)(TreeRenderer);

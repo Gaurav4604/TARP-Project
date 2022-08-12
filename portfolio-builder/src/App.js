@@ -5,27 +5,24 @@ import "./App.css";
 import ComponentContextMenu from "./components/utils/ComponentContextMenu";
 import ComponentPanel from "./components/utils/ComponentPanel";
 import appTheme from "./components/utils/Theme";
-import ListRenderer from "./ListRenderer";
+import TreeRenderer from "./TreeRenderer";
 import { toggleContextMenu, captureMousePos } from "./redux/Utils/UtilsActions";
 
 const App = ({ theme, toggleContextMenu, captureMousePos }) => {
   useEffect(() => {
     const stateMouseMove = (e) => captureMousePos(e);
-
     window.addEventListener("mousemove", stateMouseMove);
-
     return () => {
       window.removeEventListener("mousemove", stateMouseMove);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [captureMousePos]);
 
   return (
     <ThemeProvider theme={appTheme}>
       <Stack
         id="application"
         onContextMenu={(e) => {
-          toggleContextMenu(true);
+          toggleContextMenu(true, "frame");
           e.preventDefault();
         }}
       >
@@ -33,7 +30,7 @@ const App = ({ theme, toggleContextMenu, captureMousePos }) => {
         <ComponentPanel />
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>
-            <ListRenderer />
+            <TreeRenderer />
           </ThemeProvider>
         </Stack>
       </Stack>
@@ -41,9 +38,11 @@ const App = ({ theme, toggleContextMenu, captureMousePos }) => {
   );
 };
 
-const mapStateToProps = ({ theme }) => {
+const mapStateToProps = ({ theme, componentTree }) => {
+  const { components } = componentTree;
   return {
     theme,
+    components,
   };
 };
 

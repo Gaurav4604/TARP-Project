@@ -26,15 +26,26 @@ export const captureMousePos = (e) => {
   };
 };
 
-export const toggleContextMenu = (flag) => {
+export const toggleContextMenu = (flag, anchor = "", metadata = {}) => {
   return (dispatch, getState) => {
     const { coordinates } = getState().utils;
-    dispatch({
-      type: types.TOGGLE_CONTEXT_MENU,
-      payload: {
-        open: flag,
-        coordinates: flag ? { ...coordinates } : {},
-      },
-    });
+    if (flag) {
+      dispatch({
+        type: types.TOGGLE_CONTEXT_MENU,
+        payload: {
+          open: flag,
+          componentContextAnchor: anchor,
+          coordinates,
+          metadata,
+        },
+      });
+    } else {
+      dispatch({
+        type: types.TOGGLE_CONTEXT_MENU,
+        payload: {
+          open: flag,
+        },
+      });
+    }
   };
 };
