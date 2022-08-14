@@ -44,6 +44,7 @@ export const toggleContextMenu = (flag, anchor = "", metadata = {}) => {
         type: types.TOGGLE_CONTEXT_MENU,
         payload: {
           open: flag,
+          componentContextAnchor: "frame",
         },
       });
     }

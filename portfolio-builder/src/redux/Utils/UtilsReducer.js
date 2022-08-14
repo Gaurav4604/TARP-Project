@@ -6,7 +6,7 @@ const initialState = {
   coordinates: {},
   contextMenu: {
     open: false,
-    componentContextAnchor: null,
+    componentContextAnchor: "frame",
     metadata: {},
     coordinates: {},
   },

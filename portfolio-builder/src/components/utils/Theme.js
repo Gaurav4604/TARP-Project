@@ -18,7 +18,6 @@ const appTheme = createTheme({
             height: "100vh",
             overflow: "scroll",
             backgroundColor: "white",
-            cursor: "context-menu",
           },
         },
         {
@@ -26,7 +25,7 @@ const appTheme = createTheme({
             id: "builder-page",
           },
           style: {
-            width: "80vw",
+            width: "100vw",
           },
         },
       ],

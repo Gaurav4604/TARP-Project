@@ -1,6 +1,11 @@
 const initialState = {
   components: {
     MuiStack: {
+      styleOverrides: {
+        root: {
+          cursor: "context-menu",
+        },
+      },
       variants: [
         {
           props: {
@@ -8,7 +13,7 @@ const initialState = {
           },
           style: {
             width: "100%",
-            height: "500px",
+            height: "100vh",
             backgroundColor: "blue",
           },
         },
@@ -18,7 +23,7 @@ const initialState = {
           },
           style: {
             width: "100%",
-            height: "500px",
+            height: "100vh",
             backgroundColor: "red",
           },
         },
@@ -28,7 +33,7 @@ const initialState = {
           },
           style: {
             width: "100%",
-            height: "500px",
+            height: "100vh",
             backgroundColor: "green",
           },
         },

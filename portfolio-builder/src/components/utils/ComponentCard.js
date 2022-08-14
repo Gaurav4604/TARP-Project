@@ -10,7 +10,7 @@ import {
 import React from "react";
 
 import { connect } from "react-redux";
-import { addComponent } from "../../../redux/ComponentTree/ComponentTreeActions";
+import { addComponent } from "../../redux/ComponentTree/ComponentTreeActions";
 
 const cardTheme = createTheme({
   palette: {

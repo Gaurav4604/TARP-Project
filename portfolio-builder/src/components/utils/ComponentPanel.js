@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { toggleComponentDrawer } from "../../redux/Utils/UtilsActions";
 
 import config from "../../redux/Utils/componentConfig";
-import ComponentCard from "./components/ComponentCard";
+import ComponentCard from "./ComponentCard";
 
 const renderCards = () => {
   return Object.entries(config).map((component) => {

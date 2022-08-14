@@ -1,6 +1,6 @@
 import { Layers, SportsMartialArts, ThreeDRotation } from "@mui/icons-material";
 import Frame from "../../components/frames/Frame";
-import { Stack, Typography } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 
 const config = {
   frames: [
@@ -23,15 +23,22 @@ const config = {
               sx: {
                 width: "50%",
                 border: "1rem solid black",
+                borderRadius: "1rem",
                 height: "100%",
                 bgcolor: "blue",
+                alignItems: "center",
+                justifyContent: "center",
               },
             },
             components: [
               {
-                componentJSX: Typography,
+                componentJSX: Grid,
                 dataProps: {
-                  children: "Hi I am Hero Section",
+                  sx: {
+                    width: "50%",
+                    height: "50%",
+                    backgroundColor: "rgb(0, 255, 0)",
+                  },
                 },
               },
             ],

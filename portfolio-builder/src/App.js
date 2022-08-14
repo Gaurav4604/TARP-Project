@@ -6,9 +6,10 @@ import ComponentContextMenu from "./components/utils/ComponentContextMenu";
 import ComponentPanel from "./components/utils/ComponentPanel";
 import appTheme from "./components/utils/Theme";
 import TreeRenderer from "./TreeRenderer";
-import { toggleContextMenu, captureMousePos } from "./redux/Utils/UtilsActions";
+import { captureMousePos } from "./redux/Utils/UtilsActions";
+import AddFAB from "./components/utils/AddFAB";
 
-const App = ({ theme, toggleContextMenu, captureMousePos }) => {
+const App = ({ theme, captureMousePos }) => {
   useEffect(() => {
     const stateMouseMove = (e) => captureMousePos(e);
     window.addEventListener("mousemove", stateMouseMove);
@@ -19,15 +20,10 @@ const App = ({ theme, toggleContextMenu, captureMousePos }) => {
 
   return (
     <ThemeProvider theme={appTheme}>
-      <Stack
-        id="application"
-        onContextMenu={(e) => {
-          toggleContextMenu(true, "frame");
-          e.preventDefault();
-        }}
-      >
+      <Stack id="application">
         <ComponentContextMenu />
         <ComponentPanel />
+        <AddFAB />
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>
             <TreeRenderer />
@@ -46,6 +42,4 @@ const mapStateToProps = ({ theme, componentTree }) => {
   };
 };
 
-export default connect(mapStateToProps, { toggleContextMenu, captureMousePos })(
-  App
-);
+export default connect(mapStateToProps, { captureMousePos })(App);
