@@ -2,23 +2,25 @@ import React from "react";
 import { connect } from "react-redux";
 
 const componentTreeRenderer = (components) => {
+  //TODO change renderer to work according to new tree logic
   return components.map((component) => {
-    const {
-      componentJSX,
-      id = "",
-      className = "",
-      dataProps = {},
-      components = [],
-    } = component;
-
-    if (componentJSX) {
-      return React.createElement(componentJSX, {
-        className,
-        key: `${className} + ${id}`,
-        id,
-        children: componentTreeRenderer(components),
-        ...dataProps,
-      });
+    if (component !== null) {
+      const {
+        componentJSX = "",
+        id = "",
+        className = "",
+        dataProps = {},
+        components = [],
+      } = component;
+      if (componentJSX) {
+        return React.createElement(componentJSX, {
+          className,
+          key: `${id}`,
+          id,
+          children: componentTreeRenderer(components),
+          ...dataProps,
+        });
+      } else return undefined;
     } else return undefined;
   });
 };
@@ -28,9 +30,9 @@ const TreeRenderer = ({ components }) => {
 };
 
 const mapStateToProps = ({ componentTree }) => {
-  const { components } = componentTree;
+  const { intro, body, contact } = componentTree;
   return {
-    components,
+    components: [intro, ...body, contact],
   };
 };
 

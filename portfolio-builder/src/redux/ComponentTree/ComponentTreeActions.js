@@ -1,133 +1,100 @@
 import types from "./types";
 
-const constants = ["hero-section", "body-section", "contact-section"];
-
-// const jsonTreeSearch = (components = [], id) => {
-//   for (let i = 0; i < components.length; i++) {
-//     if (components[i].id === id) return components[i];
-//     else if (components[i].components && components[i].components.length) {
-//       const result = jsonTreeSearch(components[i].components, id);
-//       if (result) return result;
-//     }
-//   }
-// };
+const jsonTreeSearch = ({ components = [], id, className }) => {
+  for (let i = 0; i < components.length; i++) {
+    if (components[i].id === id && components[i].className === className)
+      return components[i];
+    else if (components[i].components && components[i].components.length) {
+      const result = jsonTreeSearch({
+        components: components[i].components,
+        id,
+        className,
+      });
+      if (result) return result;
+    }
+  }
+};
 
 const idExtensionGenerator = () => {
   return new Date().valueOf().toString();
 };
 
-export const addComponent = (component) => {
+export const addComponentV2 = (component) => {
   return (dispatch, getState) => {
-    let { componentClassName } = component;
-    let { components, stack } = getState().componentTree;
-    const { componentContextAnchor } = getState().utils.contextMenu;
-    console.log(componentContextAnchor);
-    switch (componentContextAnchor) {
-      case "frame":
-        switch (constants.indexOf(componentClassName)) {
-          case 0:
-            if (!stack["hero-section"]) {
-              stack["hero-section"] = true;
-              components = [
-                {
-                  className: componentClassName,
-                  ...component,
-                  id: componentClassName,
-                },
-                ...components,
-              ];
-            }
-            break;
-          case 2:
-            if (!stack["contact-section"]) {
-              stack["contact-section"] = true;
-              components = [
-                ...components,
-                {
-                  className: componentClassName,
-                  ...component,
+    const { className, root } = component;
+    const tree = getState().componentTree;
 
-                  id: componentClassName,
-                },
-              ];
-            }
-            break;
-          default:
-            switch (components.length) {
-              case 0:
-                components.push({
-                  className: componentClassName,
-                  id: idExtensionGenerator(),
-                  ...component,
-                });
-                break;
-              default:
-                if (components[components.length - 1].id === constants[2]) {
-                  switch (components.length) {
-                    case 1:
-                      components.splice(0, 0, {
-                        className: componentClassName,
-                        id: idExtensionGenerator(),
-                        ...component,
-                      });
-                      break;
-                    default:
-                      const start = components.slice(0, components.length - 1);
-                      const end = components.slice(
-                        components.length - 1,
-                        components.length
-                      );
-                      components = [
-                        ...start,
-                        {
-                          className: componentClassName,
-                          id: idExtensionGenerator(),
-                          ...component,
-                        },
-                        ...end,
-                      ];
-                      break;
-                  }
-                } else {
-                  components.push({
-                    className: componentClassName,
-                    id: idExtensionGenerator(),
-                    ...component,
-                  });
-                }
-                break;
-            }
-            break;
-        }
-        break;
-      case "molecule":
-        {
-          const { metadata } = getState().utils.contextMenu;
-          const { components } = getState().componentTree.components.filter(
-            (component) =>
-              component.className === metadata.className.split(" ")[0] &&
-              component.id === metadata.id
-          )[0];
-          console.log(components);
-          console.log(
-            getState().componentTree.components.findIndex(
-              (component) =>
-                component.className === metadata.className.split(" ")[0] &&
-                component.id === metadata.id
-            )
-          );
-        }
-        break;
-      default:
-        break;
+    const componentPackage = {
+      className,
+      id: idExtensionGenerator().toString(),
+      components: [],
+      ...component,
+    };
+
+    //! check if component is a root
+    //* hero/body/contact (roots)
+    if (root) {
+      // check the root type
+      if (
+        ["intro", "contact"].includes(className) &&
+        tree[className] === null
+      ) {
+        const payload = {};
+        payload[className] = { ...componentPackage };
+        dispatch({
+          type: types.ADD_COMPONENT,
+          payload,
+        });
+      } else {
+        const { body } = tree;
+        dispatch({
+          type: types.ADD_COMPONENT,
+          payload: {
+            body: [...body, { ...componentPackage }],
+          },
+        });
+      }
+    } else {
+      //! identify the stack group, the component belongs to
+      //* hero/body/contact
+      const { metadata } = getState().utils.contextMenu;
+      const rootName = metadata.className.split(" ")[0];
+      console.log(rootName);
+      const treeGroup = tree[rootName];
+      if (["intro", "contact"].includes(rootName)) {
+        let parent = jsonTreeSearch({
+          components: [{ ...treeGroup }],
+          className: metadata.className,
+          id: metadata.id,
+        });
+        let tempParent = { ...parent };
+        let treeNodeIndex = [];
+        // while (tempParent.hasOwnProperty("parentRef")) {
+        //   parent = jsonTreeSearch({
+        //     components: [{ ...treeGroup }],
+        //     className: tempParent.className,
+        //     id: tempParent.id,
+        //   });
+        //   index = parent.components.findIndex((component) => component.id === )
+        //   treeNodeIndex.push(tempParent);
+
+        // }
+
+        parent = {
+          ...parent,
+          components: [
+            ...parent.components,
+            {
+              ...componentPackage,
+              className: `${metadata.className} + ${componentPackage.className}`,
+              parentRef: {
+                className: metadata.className,
+                id: metadata.id,
+              },
+            },
+          ],
+        };
+      }
     }
-
-    dispatch({
-      type: types.ADD_COMPONENT,
-      payload: {
-        components: [...components],
-        stack,
-      },
-    });
   };
 };

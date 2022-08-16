@@ -1,11 +1,9 @@
 import types from "./types";
 
 const initialState = {
-  components: [],
-  stack: {
-    "hero-section": false,
-    "contact-section": false,
-  },
+  intro: null,
+  body: [],
+  contact: null,
 };
 
 const stateReducer = (state = initialState, action) => {

@@ -9,7 +9,7 @@ const initialState = {
       variants: [
         {
           props: {
-            className: "hero-section",
+            className: "intro",
           },
           style: {
             width: "100%",
@@ -19,7 +19,7 @@ const initialState = {
         },
         {
           props: {
-            className: "body-section",
+            className: "body",
           },
           style: {
             width: "100%",
@@ -29,7 +29,7 @@ const initialState = {
         },
         {
           props: {
-            className: "contact-section",
+            className: "contact",
           },
           style: {
             width: "100%",

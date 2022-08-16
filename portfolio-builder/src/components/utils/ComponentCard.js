@@ -10,13 +10,13 @@ import {
 import React from "react";
 
 import { connect } from "react-redux";
-import { addComponent } from "../../redux/ComponentTree/ComponentTreeActions";
+import { addComponentV2 } from "../../redux/ComponentTree/ComponentTreeActions";
 
 const cardTheme = createTheme({
   palette: {
     primary: {
-      frames: "#A66CFF",
-      molecules: "#9C9EFE",
+      root: "#A66CFF",
+      blocks: "#9C9EFE",
       atoms: "#AFB4FF",
       main: "#fff",
     },
@@ -59,16 +59,16 @@ const cardTheme = createTheme({
       variants: [
         {
           props: {
-            className: "frames",
+            className: "root",
           },
           style: sx({
-            bgcolor: "primary.frames",
+            bgcolor: "primary.root",
           }),
         },
         {
-          props: { className: "molecules" },
+          props: { className: "blocks" },
           style: sx({
-            bgcolor: "primary.molecules",
+            bgcolor: "primary.blocks",
           }),
         },
         {
@@ -133,19 +133,19 @@ const ComponentCard = ({
   icon,
   component,
   caption,
-  addComponent,
+  addComponentV2,
   componentGroup,
 }) => {
-  const generateId = (caption) => caption.toLowerCase().split(" ").join("-");
+  const generateClassName = (caption) => caption.toLowerCase();
   return (
     <ThemeProvider theme={cardTheme}>
       <Card
-        id={generateId(caption)}
+        id={generateClassName(caption)}
         className={componentGroup}
         onClick={() =>
-          addComponent({
+          addComponentV2({
             ...component,
-            componentClassName: generateId(caption),
+            className: generateClassName(caption),
           })
         }
       >
@@ -161,4 +161,4 @@ const ComponentCard = ({
   );
 };
 
-export default connect(null, { addComponent })(ComponentCard);
+export default connect(null, { addComponentV2 })(ComponentCard);

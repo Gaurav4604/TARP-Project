@@ -7,10 +7,20 @@ export const toggleEditor = (flag) => {
   };
 };
 
-export const toggleComponentDrawer = (flag) => {
-  return {
-    type: types.TOGGLE_COMPONENT_DRAWER,
-    payload: flag,
+export const toggleComponentDrawer = (flag, root = false) => {
+  return (dispatch) => {
+    if (root) {
+      dispatch({
+        type: types.TOGGLE_CONTEXT_MENU,
+        payload: {
+          root,
+        },
+      });
+    }
+    dispatch({
+      type: types.TOGGLE_COMPONENT_DRAWER,
+      payload: flag,
+    });
   };
 };
 
@@ -26,7 +36,7 @@ export const captureMousePos = (e) => {
   };
 };
 
-export const toggleContextMenu = (flag, anchor = "", metadata = {}) => {
+export const toggleContextMenu = (flag, root = false, metadata = {}) => {
   return (dispatch, getState) => {
     const { coordinates } = getState().utils;
     if (flag) {
@@ -34,7 +44,7 @@ export const toggleContextMenu = (flag, anchor = "", metadata = {}) => {
         type: types.TOGGLE_CONTEXT_MENU,
         payload: {
           open: flag,
-          componentContextAnchor: anchor,
+          root,
           coordinates,
           metadata,
         },
@@ -44,7 +54,6 @@ export const toggleContextMenu = (flag, anchor = "", metadata = {}) => {
         type: types.TOGGLE_CONTEXT_MENU,
         payload: {
           open: flag,
-          componentContextAnchor: "frame",
         },
       });
     }

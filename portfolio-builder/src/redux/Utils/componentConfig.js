@@ -1,63 +1,50 @@
-import { Layers, SportsMartialArts, ThreeDRotation } from "@mui/icons-material";
-import Frame from "../../components/frames/Frame";
-import { Grid, Stack } from "@mui/material";
+import {
+  ContactPhone,
+  FilterFrames,
+  Layers,
+  SportsMartialArts,
+} from "@mui/icons-material";
+import Frame from "../../components/blocks/Frame";
+import { Stack } from "@mui/material";
 
 const config = {
-  frames: [
+  root: [
     {
-      caption: "Hero Section",
+      caption: "Intro",
       icon: SportsMartialArts,
       component: {
         componentJSX: Frame,
-        dataProps: {
-          sx: {
-            bgcolor: "purple",
-            alignItems: "center",
-            justifyContent: "center",
-          },
-        },
-        components: [
-          {
-            componentJSX: Frame,
-            dataProps: {
-              sx: {
-                width: "50%",
-                border: "1rem solid black",
-                borderRadius: "1rem",
-                height: "100%",
-                bgcolor: "blue",
-                alignItems: "center",
-                justifyContent: "center",
-              },
-            },
-            components: [
-              {
-                componentJSX: Grid,
-                dataProps: {
-                  sx: {
-                    width: "50%",
-                    height: "50%",
-                    backgroundColor: "rgb(0, 255, 0)",
-                  },
-                },
-              },
-            ],
-          },
-        ],
+        root: true,
+        components: [],
       },
     },
     {
-      caption: "Body Section",
+      caption: "Body",
       icon: Layers,
       component: {
+        root: true,
         componentJSX: Frame,
+        components: [],
       },
     },
     {
-      caption: "Contact Section",
-      icon: ThreeDRotation,
+      caption: "Contact",
+      icon: ContactPhone,
       component: {
+        root: true,
         componentJSX: Stack,
+        components: [],
+      },
+    },
+  ],
+  blocks: [
+    {
+      caption: "Frame",
+      icon: FilterFrames,
+      component: {
+        root: false,
+        componentJSX: Frame,
+        components: [],
       },
     },
   ],

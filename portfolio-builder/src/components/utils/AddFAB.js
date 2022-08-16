@@ -25,7 +25,7 @@ const AddFAB = ({ toggleComponentDrawer }) => {
       <Fab
         size="medium"
         aria-label="add"
-        onClick={() => toggleComponentDrawer(true)}
+        onClick={() => toggleComponentDrawer(true, true)}
       >
         <Add />
       </Fab>

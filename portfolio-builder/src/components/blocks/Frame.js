@@ -11,10 +11,17 @@ const Frame = ({ children, className, id, ...props }) => {
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
+        console.log(
+          e.currentTarget.id,
+          e.currentTarget.className.split(" ").slice(0, -1).join(" ")
+        );
         dispatch(
-          toggleContextMenu(true, "molecule", {
+          toggleContextMenu(true, false, {
             id: e.currentTarget.id,
-            className: e.currentTarget.className,
+            className: e.currentTarget.className
+              .split(" ")
+              .slice(0, -1)
+              .join(" "),
           })
         );
       }}

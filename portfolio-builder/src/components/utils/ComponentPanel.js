@@ -6,23 +6,35 @@ import { toggleComponentDrawer } from "../../redux/Utils/UtilsActions";
 import config from "../../redux/Utils/componentConfig";
 import ComponentCard from "./ComponentCard";
 
-const renderCards = () => {
-  return Object.entries(config).map((component) => {
-    const componentGroup = component[0];
-    const components = component[1];
-    return [
-      ...components.map((component) => (
-        <ComponentCard
-          {...component}
-          key={component.caption}
-          componentGroup={componentGroup}
-        />
-      )),
-    ];
-  });
-};
+const ComponentPanel = ({
+  componentDrawerOpen,
+  toggleComponentDrawer,
+  root,
+}) => {
+  const renderCards = () => {
+    return Object.entries(config).map((group) => {
+      if (root && group[0] === "root") {
+        const components = group[1];
+        return components.map((component) => (
+          <ComponentCard
+            {...component}
+            key={component.caption}
+            componentGroup={group[0]}
+          />
+        ));
+      } else if (!root && group[0] === "blocks") {
+        const components = group[1];
+        return components.map((component) => (
+          <ComponentCard
+            {...component}
+            key={component.caption}
+            componentGroup={group[0]}
+          />
+        ));
+      } else return undefined;
+    });
+  };
 
-const ComponentPanel = ({ componentDrawerOpen, toggleComponentDrawer }) => {
   return (
     <Drawer
       anchor={"left"}
@@ -42,9 +54,11 @@ const ComponentPanel = ({ componentDrawerOpen, toggleComponentDrawer }) => {
 };
 
 const mapStateToProps = ({ utils }) => {
-  const { componentDrawerOpen } = utils;
+  const { componentDrawerOpen, contextMenu } = utils;
+  const { root } = contextMenu;
   return {
     componentDrawerOpen,
+    root,
   };
 };
 
