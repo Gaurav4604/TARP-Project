@@ -59,7 +59,6 @@ export const addComponentV2 = (component) => {
       //* hero/body/contact
       const { metadata } = getState().utils.contextMenu;
       const rootName = metadata.className.split(" ")[0];
-      console.log(rootName);
       const treeGroup = tree[rootName];
       if (["intro", "contact"].includes(rootName)) {
         let parent = jsonTreeSearch({
@@ -67,18 +66,6 @@ export const addComponentV2 = (component) => {
           className: metadata.className,
           id: metadata.id,
         });
-        let tempParent = { ...parent };
-        let treeNodeIndex = [];
-        // while (tempParent.hasOwnProperty("parentRef")) {
-        //   parent = jsonTreeSearch({
-        //     components: [{ ...treeGroup }],
-        //     className: tempParent.className,
-        //     id: tempParent.id,
-        //   });
-        //   index = parent.components.findIndex((component) => component.id === )
-        //   treeNodeIndex.push(tempParent);
-
-        // }
 
         parent = {
           ...parent,
@@ -86,7 +73,7 @@ export const addComponentV2 = (component) => {
             ...parent.components,
             {
               ...componentPackage,
-              className: `${metadata.className} + ${componentPackage.className}`,
+              className: `${metadata.className} ${componentPackage.className}`,
               parentRef: {
                 className: metadata.className,
                 id: metadata.id,
@@ -94,6 +81,59 @@ export const addComponentV2 = (component) => {
             },
           ],
         };
+
+        if (!parent.hasOwnProperty("parentRef")) {
+          const payload = {};
+          payload[metadata.className] = parent;
+          dispatch({
+            type: types.ADD_COMPONENT,
+            payload,
+          });
+        } else {
+          let tempParent = { ...parent };
+          let nodeIndexList = [];
+          while (tempParent.hasOwnProperty("parentRef")) {
+            let comparator = { ...tempParent };
+            tempParent = jsonTreeSearch({
+              components: [{ ...treeGroup }],
+              id: tempParent.parentRef.id,
+              className: tempParent.parentRef.className,
+            });
+            nodeIndexList.push(
+              tempParent.components.findIndex(
+                (component) =>
+                  component.id === comparator.id &&
+                  component.className === comparator.className
+              )
+            );
+          }
+          let reverseTree = { ...parent };
+
+          nodeIndexList.forEach((index) => {
+            const components = jsonTreeSearch({
+              components: [{ ...treeGroup }],
+              id: reverseTree.parentRef.id,
+              className: reverseTree.parentRef.className,
+            }).components;
+            components[index] = { ...reverseTree };
+
+            reverseTree = {
+              ...jsonTreeSearch({
+                components: [{ ...treeGroup }],
+                id: reverseTree.parentRef.id,
+                className: reverseTree.parentRef.className,
+              }),
+              components: [...components],
+            };
+          });
+
+          const payload = {};
+          payload[metadata.className] = parent;
+          dispatch({
+            type: types.ADD_COMPONENT,
+            payload,
+          });
+        }
       }
     }
   };

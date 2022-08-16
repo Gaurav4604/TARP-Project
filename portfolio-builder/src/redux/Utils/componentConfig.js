@@ -5,7 +5,6 @@ import {
   SportsMartialArts,
 } from "@mui/icons-material";
 import Frame from "../../components/blocks/Frame";
-import { Stack } from "@mui/material";
 
 const config = {
   root: [
@@ -32,7 +31,7 @@ const config = {
       icon: ContactPhone,
       component: {
         root: true,
-        componentJSX: Stack,
+        componentJSX: Frame,
         components: [],
       },
     },
