@@ -2,17 +2,7 @@ function random_rgba() {
   let o = Math.round,
     r = Math.random,
     s = 255;
-  return (
-    "rgba(" +
-    o(r() * s) +
-    "," +
-    o(r() * s) +
-    "," +
-    o(r() * s) +
-    "," +
-    r().toFixed(1) +
-    ")"
-  );
+  return "rgb(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + ")";
 }
 
 const initialState = {
@@ -56,7 +46,7 @@ const initialState = {
           style: {
             width: "100%",
             height: "100vh",
-            backgroundColor: "red",
+            backgroundColor: "grey",
           },
         },
         {

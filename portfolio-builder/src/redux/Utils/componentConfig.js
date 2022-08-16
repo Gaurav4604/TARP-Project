@@ -3,7 +3,9 @@ import {
   FilterFrames,
   Layers,
   SportsMartialArts,
+  TextIncrease,
 } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 import Frame from "../../components/blocks/Frame";
 
 const config = {
@@ -43,6 +45,18 @@ const config = {
       component: {
         root: false,
         componentJSX: Frame,
+        components: [],
+      },
+    },
+    {
+      caption: "Text",
+      icon: TextIncrease,
+      component: {
+        root: false,
+        componentJSX: Typography,
+        dataProps: {
+          children: "Hello There",
+        },
         components: [],
       },
     },

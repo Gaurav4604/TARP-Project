@@ -128,10 +128,97 @@ export const addComponentV2 = (component) => {
           });
 
           const payload = {};
-          payload[metadata.className] = parent;
+          payload[metadata.className] = reverseTree;
           dispatch({
             type: types.ADD_COMPONENT,
             payload,
+          });
+        }
+      } else {
+        let parent = jsonTreeSearch({
+          components: treeGroup,
+          id: metadata.id,
+          className: metadata.className,
+        });
+
+        parent = {
+          ...parent,
+          components: [
+            ...parent.components,
+            {
+              ...componentPackage,
+              className: `${metadata.className} ${componentPackage.className}`,
+              parentRef: {
+                className: metadata.className,
+                id: metadata.id,
+              },
+            },
+          ],
+        };
+
+        if (parent.hasOwnProperty("parentRef")) {
+          let tempParent = { ...parent };
+          let nodeIndexList = [];
+          while (tempParent.hasOwnProperty("parentRef")) {
+            let comparator = { ...tempParent };
+            tempParent = jsonTreeSearch({
+              components: [...treeGroup],
+              id: tempParent.parentRef.id,
+              className: tempParent.parentRef.className,
+            });
+            nodeIndexList.push(
+              tempParent.components.findIndex(
+                (component) =>
+                  component.id === comparator.id &&
+                  component.className === comparator.className
+              )
+            );
+          }
+          let reverseTree = { ...parent };
+          nodeIndexList.forEach((index) => {
+            const components = jsonTreeSearch({
+              components: [...treeGroup],
+              id: reverseTree.parentRef.id,
+              className: reverseTree.parentRef.className,
+            }).components;
+            components[index] = { ...reverseTree };
+
+            reverseTree = {
+              ...jsonTreeSearch({
+                components: [...treeGroup],
+                id: reverseTree.parentRef.id,
+                className: reverseTree.parentRef.className,
+              }),
+              components: [...components],
+            };
+          });
+
+          const rootNodeIndex = treeGroup.findIndex(
+            (component) =>
+              component.id === parent.id &&
+              component.className === parent.className
+          );
+          let updatedTreeGroup = [...treeGroup];
+          updatedTreeGroup[rootNodeIndex] = parent;
+          dispatch({
+            type: types.ADD_COMPONENT,
+            payload: {
+              body: updatedTreeGroup,
+            },
+          });
+        } else {
+          const rootNodeIndex = treeGroup.findIndex(
+            (component) =>
+              component.id === parent.id &&
+              component.className === parent.className
+          );
+          let updatedTreeGroup = [...treeGroup];
+          updatedTreeGroup[rootNodeIndex] = parent;
+          dispatch({
+            type: types.ADD_COMPONENT,
+            payload: {
+              body: updatedTreeGroup,
+            },
           });
         }
       }
