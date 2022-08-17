@@ -15,6 +15,12 @@ const config = {
       icon: SportsMartialArts,
       component: {
         componentJSX: Frame,
+        styleAccess: {
+          backgroundColor: "Color",
+          borderRadius: "Unit",
+          width: "Unit",
+          height: "Unit",
+        },
         root: true,
         components: [],
       },

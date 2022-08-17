@@ -1,8 +1,8 @@
 import types from "./types";
 
-export const toggleEditor = (flag) => {
+export const toggleThemePanel = (flag) => {
   return {
-    type: types.TOGGLE_EDITOR,
+    type: types.TOGGLE_THEME_PANEL,
     payload: flag,
   };
 };

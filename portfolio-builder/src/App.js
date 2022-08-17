@@ -8,6 +8,7 @@ import appTheme from "./components/utils/Theme";
 import TreeRenderer from "./TreeRenderer";
 import { captureMousePos } from "./redux/Utils/UtilsActions";
 import AddFAB from "./components/utils/AddFAB";
+import ThemePanel from "./components/utils/ThemePanel";
 
 const App = ({ theme, captureMousePos }) => {
   useEffect(() => {
@@ -23,6 +24,7 @@ const App = ({ theme, captureMousePos }) => {
       <Stack id="application">
         <ComponentContextMenu />
         <ComponentPanel />
+        <ThemePanel />
         <AddFAB />
         <Stack id="builder-page">
           <ThemeProvider theme={createTheme(theme)}>

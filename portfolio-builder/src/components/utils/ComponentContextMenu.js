@@ -1,25 +1,35 @@
 import { AddToQueue, Delete, Palette } from "@mui/icons-material";
-import { createTheme, ListItemIcon, ListItemText, Menu, MenuItem, ThemeProvider } from "@mui/material";
+import {
+  createTheme,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  ThemeProvider,
+} from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
-import { toggleComponentDrawer, toggleContextMenu, } from "../../redux/Utils/UtilsActions";
-
+import {
+  toggleComponentDrawer,
+  toggleContextMenu,
+  toggleThemePanel,
+} from "../../redux/Utils/UtilsActions";
 
 const menuTheme = createTheme({
   components: {
     MuiMenu: {
       styleOverrides: {
         paper: {
-          width: "10rem"
-        }
-      }
+          width: "10rem",
+        },
+      },
     },
     MuiListItemIcon: {
       styleOverrides: {
         root: {
-          color: "black"
-        }
-      }
+          color: "black",
+        },
+      },
     },
     MuiListItemText: {
       styleOverrides: {
@@ -28,14 +38,19 @@ const menuTheme = createTheme({
         },
         primary: {
           fontWeight: "700",
-          color: "black"
-        }
-      }
-    }
-  }
-})
+          color: "black",
+        },
+      },
+    },
+  },
+});
 
-const ComponentContextMenu = ({ contextMenu, toggleContextMenu, toggleComponentDrawer }) => {
+const ComponentContextMenu = ({
+  contextMenu,
+  toggleContextMenu,
+  toggleComponentDrawer,
+  toggleThemePanel,
+}) => {
   return (
     <ThemeProvider theme={menuTheme}>
       <Menu
@@ -44,23 +59,41 @@ const ComponentContextMenu = ({ contextMenu, toggleContextMenu, toggleComponentD
         anchorReference="anchorPosition"
         anchorPosition={
           contextMenu.open
-            ? { top: contextMenu.coordinates.y, left: contextMenu.coordinates.x }
+            ? {
+                top: contextMenu.coordinates.y,
+                left: contextMenu.coordinates.x,
+              }
             : undefined
         }
       >
-        <MenuItem onClick={() => { toggleComponentDrawer(true); toggleContextMenu(false) }}>
+        <MenuItem
+          onClick={() => {
+            toggleComponentDrawer(true);
+            toggleContextMenu(false);
+          }}
+        >
           <ListItemIcon>
             <AddToQueue />
           </ListItemIcon>
           <ListItemText>Add</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => { toggleComponentDrawer(true); toggleContextMenu(false) }}>
+        <MenuItem
+          onClick={() => {
+            toggleThemePanel(true);
+            toggleContextMenu(false);
+          }}
+        >
           <ListItemIcon>
             <Palette />
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
         </MenuItem>
-        <MenuItem onClick={() => { toggleComponentDrawer(true); toggleContextMenu(false) }}>
+        <MenuItem
+          onClick={() => {
+            toggleComponentDrawer(true);
+            toggleContextMenu(false);
+          }}
+        >
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
@@ -68,7 +101,6 @@ const ComponentContextMenu = ({ contextMenu, toggleContextMenu, toggleComponentD
         </MenuItem>
       </Menu>
     </ThemeProvider>
-
   );
 };
 
@@ -79,6 +111,8 @@ const mapStateToProps = ({ utils }) => {
   };
 };
 
-export default connect(mapStateToProps, { toggleContextMenu, toggleComponentDrawer })(
-  ComponentContextMenu
-);
+export default connect(mapStateToProps, {
+  toggleContextMenu,
+  toggleComponentDrawer,
+  toggleThemePanel,
+})(ComponentContextMenu);

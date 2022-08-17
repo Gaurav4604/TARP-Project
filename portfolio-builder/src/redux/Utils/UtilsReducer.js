@@ -1,7 +1,7 @@
 import types from "./types";
 
 const initialState = {
-  editorOpen: false,
+  themeOpen: false,
   componentDrawerOpen: false,
   coordinates: {},
   contextMenu: {
@@ -19,10 +19,10 @@ const utilsReducer = (state = initialState, action) => {
         ...state,
         ...action.payload,
       };
-    case types.TOGGLE_EDITOR:
+    case types.TOGGLE_THEME_PANEL:
       return {
         ...state,
-        editorOpen: action.payload,
+        themeOpen: action.payload,
       };
     case types.TOGGLE_COMPONENT_DRAWER:
       return {
