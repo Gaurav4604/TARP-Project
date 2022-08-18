@@ -1,9 +1,4 @@
-function random_rgba() {
-  let o = Math.round,
-    r = Math.random,
-    s = 255;
-  return "rgb(" + o(r() * s) + "," + o(r() * s) + "," + o(r() * s) + ")";
-}
+import types from "./types";
 
 const initialState = {
   components: {
@@ -11,9 +6,6 @@ const initialState = {
       styleOverrides: {
         root: {
           cursor: "context-menu",
-          backgroundColor: random_rgba(),
-          minWidth: "10rem",
-          minHeight: "10rem",
         },
       },
       variants: [
@@ -66,6 +58,11 @@ const initialState = {
 
 const themeReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.ADD_COMPONENT_THEME:
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }

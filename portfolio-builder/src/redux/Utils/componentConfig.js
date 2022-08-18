@@ -7,6 +7,7 @@ import {
 } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Frame from "../../components/blocks/Frame";
+import styleSheet from "./StyleSheetMetaData";
 
 const config = {
   root: [
@@ -15,11 +16,10 @@ const config = {
       icon: SportsMartialArts,
       component: {
         componentJSX: Frame,
-        styleAccess: {
-          backgroundColor: "Color",
-          borderRadius: "Unit",
-          width: "Unit",
-          height: "Unit",
+        componentType: "MuiStack",
+        styleConfig: {
+          margin: styleSheet.margin,
+          padding: styleSheet.padding,
         },
         root: true,
         components: [],
@@ -31,6 +31,7 @@ const config = {
       component: {
         root: true,
         componentJSX: Frame,
+        componentType: "MuiStack",
         components: [],
       },
     },
@@ -40,6 +41,7 @@ const config = {
       component: {
         root: true,
         componentJSX: Frame,
+        componentType: "MuiStack",
         components: [],
       },
     },
@@ -48,7 +50,15 @@ const config = {
     {
       caption: "Frame",
       icon: FilterFrames,
+      componentType: "MuiStack",
       component: {
+        dataProps: {
+          sx: {
+            borderRadius: "50%",
+            width: "10rem",
+            height: "10rem",
+          },
+        },
         root: false,
         componentJSX: Frame,
         components: [],
@@ -56,6 +66,7 @@ const config = {
     },
     {
       caption: "Text",
+      componentType: "MuiTypography",
       icon: TextIncrease,
       component: {
         root: false,

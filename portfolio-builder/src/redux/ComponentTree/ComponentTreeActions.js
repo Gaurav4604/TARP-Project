@@ -1,6 +1,6 @@
 import types from "./types";
 
-const jsonTreeSearch = ({ components = [], id, className }) => {
+export const jsonTreeSearch = ({ components = [], id, className }) => {
   for (let i = 0; i < components.length; i++) {
     if (components[i].id === id && components[i].className === className)
       return components[i];
