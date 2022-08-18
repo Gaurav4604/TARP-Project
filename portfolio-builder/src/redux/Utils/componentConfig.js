@@ -17,6 +17,13 @@ const config = {
       component: {
         componentJSX: Frame,
         componentType: "MuiStack",
+        dataProps: {
+          sx: {
+            width: "100vw",
+            height: "100vh",
+            bgcolor: "rgb(100, 100, 100)",
+          },
+        },
         styleConfig: {
           margin: styleSheet.margin,
           padding: styleSheet.padding,
