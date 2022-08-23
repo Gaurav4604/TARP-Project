@@ -21,7 +21,7 @@ export const setThemeValue = ({ id, className, value = {} }) => {
     const variantIndex = variants.findIndex(
       (variant) =>
         Object.keys(variant).includes("props") &&
-        variant.className === className &&
+        variant.props.className === className &&
         variant.props.id === id
     );
 

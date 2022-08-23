@@ -17,15 +17,17 @@ const config = {
       component: {
         componentJSX: Frame,
         componentType: "MuiStack",
-        dataProps: {
-          sx: {
-            width: "100vw",
-            height: "100vh",
-          },
+        stylesToSetOnMount: {
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "blue",
         },
         styleConfig: {
           margin: styleSheet.margin,
           padding: styleSheet.padding,
+          width: styleSheet.width,
+          height: styleSheet.height,
+          borderRadius: styleSheet.borderRadius,
         },
         root: true,
         components: [],
@@ -56,14 +58,19 @@ const config = {
     {
       caption: "Frame",
       icon: FilterFrames,
-      componentType: "MuiStack",
       component: {
-        dataProps: {
-          sx: {
-            borderRadius: "50%",
-            width: "10rem",
-            height: "10rem",
-          },
+        componentType: "MuiStack",
+        styleConfig: {
+          margin: styleSheet.margin,
+          padding: styleSheet.padding,
+          width: styleSheet.width,
+          height: styleSheet.height,
+          borderRadius: styleSheet.borderRadius,
+        },
+        stylesToSetOnMount: {
+          width: "20vw",
+          height: "20vh",
+          backgroundColor: "yellow",
         },
         root: false,
         componentJSX: Frame,
@@ -77,6 +84,7 @@ const config = {
       component: {
         root: false,
         componentJSX: Typography,
+
         dataProps: {
           children: "Hello There",
         },

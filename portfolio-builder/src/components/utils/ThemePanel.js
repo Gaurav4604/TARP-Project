@@ -3,31 +3,34 @@ import { Drawer, Stack } from "@mui/material";
 import { connect } from "react-redux";
 import { toggleThemePanel } from "../../redux/Utils/UtilsActions";
 import { jsonTreeSearch } from "../../redux/ComponentTree/ComponentTreeActions";
-import { useEffect } from "react";
 import { setThemeValue } from "../../redux/Theme/themeActions";
+import Unit from "../theme/Unit";
 
 const ThemePanel = ({
   themeOpen = false,
   toggleThemePanel,
   styleConfig = {},
-  metadata = {},
-  setThemeValue,
+  node,
 }) => {
-  console.log(styleConfig, metadata);
-
-  useEffect(() => {
-    if (Object.keys(styleConfig).length > 0) {
-      setThemeValue({
-        id: metadata.id,
-        className: metadata.className,
-        value: {
-          property: "backgroundColor",
-          value: "rgb(200, 200, 0)",
-          unit: "",
-        },
-      });
-    }
-  }, [styleConfig, metadata, setThemeValue]);
+  const renderStyleModifiers = () => {
+    const configurations = Object.entries(styleConfig);
+    return configurations.map((config, index) => {
+      switch (config[1].type) {
+        case "Unit":
+          const { min, max, unit, step } = config[1];
+          return (
+            <Unit
+              {...{ min, max, unit, step }}
+              property={config[0]}
+              node={node}
+              key={index}
+            />
+          );
+        default:
+          return undefined;
+      }
+    });
+  };
 
   return (
     <Drawer
@@ -41,7 +44,9 @@ const ThemePanel = ({
         role="presentation"
         alignItems="center"
         justifyContent="center"
-      ></Stack>
+      >
+        {renderStyleModifiers()}
+      </Stack>
     </Drawer>
   );
 };
@@ -57,8 +62,9 @@ const mapStateToProps = ({ utils, componentTree }) => {
     });
 
     const { styleConfig } = node;
+
     return {
-      metadata,
+      node,
       themeOpen,
       styleConfig,
     };

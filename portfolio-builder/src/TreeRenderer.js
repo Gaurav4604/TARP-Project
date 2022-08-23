@@ -8,6 +8,7 @@ const componentTreeRenderer = (components) => {
       const {
         componentJSX = "",
         id = "",
+        stylesToSetOnMount = {},
         className = "",
         dataProps = {},
         components = [],
@@ -16,6 +17,7 @@ const componentTreeRenderer = (components) => {
         return React.createElement(componentJSX, {
           className,
           key: `${id}`,
+          stylesToSetOnMount,
           id,
           children: componentTreeRenderer(components),
           ...dataProps,
