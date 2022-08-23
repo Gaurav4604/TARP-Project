@@ -42,7 +42,7 @@ const ComponentPanel = ({
       onClose={() => toggleComponentDrawer(false)}
     >
       <Stack
-        sx={{ width: "10rem", height: "100%" }}
+        id="component-panel"
         role="presentation"
         alignItems="center"
         justifyContent="center"

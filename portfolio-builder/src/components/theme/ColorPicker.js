@@ -1,44 +1,33 @@
-import { FormControlLabel, Slider } from "@mui/material";
+import { TextField } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import { setThemeValue } from "../../redux/Theme/themeActions";
 
-const Unit = ({
+const ColorPicker = ({
   node = {},
-  step,
-  min,
-  max,
-  id,
   value,
-  property,
-  unit,
+  id,
   className,
+  property,
   setThemeValue,
 }) => {
   return (
-    <FormControlLabel
-      label={property}
-      labelPlacement={"top"}
-      control={
-        <Slider
-          id="unit-slider"
-          {...{ step, min, max }}
-          marks
-          value={value}
-          valueLabelDisplay="auto"
-          onChange={(_, value) => {
-            setThemeValue({
-              id,
-              className,
-              value: {
-                unit,
-                property,
-                value,
-              },
-            });
-          }}
-        />
-      }
+    <TextField
+      type="color"
+      id="color-input"
+      value={value}
+      onChange={(e) => {
+        e.preventDefault();
+        setThemeValue({
+          id,
+          className,
+          value: {
+            unit: "",
+            property,
+            value: e.target.value,
+          },
+        });
+      }}
     />
   );
 };
@@ -59,15 +48,15 @@ const mapStateToProps = ({ theme }, props) => {
       return {
         id,
         className,
-        value: parseInt(variants[variantIndex].style[property]),
+        value: variants[variantIndex].style[property],
       };
     }
   }
   return {
     id,
     className,
-    value: 0,
+    value: "#ffffff",
   };
 };
 
-export default connect(mapStateToProps, { setThemeValue })(Unit);
+export default connect(mapStateToProps, { setThemeValue })(ColorPicker);
