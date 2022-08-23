@@ -7,7 +7,7 @@ export const setThemeValue = ({ id, className, value = {} }) => {
     const component =
       className.split(" ")[0] === "body"
         ? jsonTreeSearch({ components: section, id, className })
-        : jsonTreeSearch({ components: [...section], id, className });
+        : jsonTreeSearch({ components: [{ ...section }], id, className });
 
     let payload = {
       componentType: "",

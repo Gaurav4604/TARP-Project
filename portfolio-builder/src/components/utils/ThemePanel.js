@@ -3,13 +3,32 @@ import { Drawer, Stack } from "@mui/material";
 import { connect } from "react-redux";
 import { toggleThemePanel } from "../../redux/Utils/UtilsActions";
 import { jsonTreeSearch } from "../../redux/ComponentTree/ComponentTreeActions";
+import { useEffect } from "react";
+import { setThemeValue } from "../../redux/Theme/themeActions";
 
 const ThemePanel = ({
   themeOpen = false,
   toggleThemePanel,
   styleConfig = {},
+  metadata = {},
+  setThemeValue,
 }) => {
-  console.log(styleConfig);
+  console.log(styleConfig, metadata);
+
+  useEffect(() => {
+    if (Object.keys(styleConfig).length > 0) {
+      setThemeValue({
+        id: metadata.id,
+        className: metadata.className,
+        value: {
+          property: "backgroundColor",
+          value: "rgb(200, 200, 0)",
+          unit: "",
+        },
+      });
+    }
+  }, [styleConfig, metadata, setThemeValue]);
+
   return (
     <Drawer
       id="theme-panel"
@@ -39,6 +58,7 @@ const mapStateToProps = ({ utils, componentTree }) => {
 
     const { styleConfig } = node;
     return {
+      metadata,
       themeOpen,
       styleConfig,
     };
@@ -46,4 +66,6 @@ const mapStateToProps = ({ utils, componentTree }) => {
   return {};
 };
 
-export default connect(mapStateToProps, { toggleThemePanel })(ThemePanel);
+export default connect(mapStateToProps, { toggleThemePanel, setThemeValue })(
+  ThemePanel
+);

@@ -21,7 +21,6 @@ const config = {
           sx: {
             width: "100vw",
             height: "100vh",
-            bgcolor: "rgb(100, 100, 100)",
           },
         },
         styleConfig: {
