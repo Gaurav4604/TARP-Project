@@ -1,22 +1,21 @@
-import { Stack } from "@mui/material";
+import { Stack, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { setThemeValue } from "../../redux/Theme/themeActions";
 import { toggleContextMenu } from "../../redux/Utils/UtilsActions";
 
-const Frame = ({
-  children,
+const ImageFrame = ({
   className,
   id,
+  src,
   stylesToSetOnMount = {},
   setThemeValue,
   ...props
 }) => {
   const dispatch = useDispatch();
-
+  const theme = useTheme();
   useEffect(() => {
     for (let entry of Object.entries(stylesToSetOnMount)) {
-      console.log(entry);
       setThemeValue({
         className,
         id,
@@ -28,8 +27,25 @@ const Frame = ({
       });
     }
   }, [className, id, setThemeValue, stylesToSetOnMount]);
+
+  const findBorderRadius = (theme) => {
+    let obj = theme.components.MuiStack.variants.filter(
+      ({ props }) => props.id === id && props.className === className
+    );
+
+    if (obj.length > 0) {
+      obj = obj[0];
+      if (Object.keys(obj.style).includes("borderRadius")) {
+        return obj.style.borderRadius;
+      }
+    }
+
+    return "";
+  };
+
   return (
     <Stack
+      sx={{ overflow: "hidden" }}
       onContextMenu={(e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -47,21 +63,18 @@ const Frame = ({
       id={id}
       {...props}
     >
-      {/* {children.length > 0 ? ( */}
-      {children}
-      {/* ) : (
-        <Stack
-          sx={{ width: "100%", height: "100%" }}
-          alignItems="center"
-          justifyContent="center"
-        >
-          <Typography variant="h1">
-            {className.toUpperCase()} Section
-          </Typography>
-        </Stack> */}
-      {/* )} */}
+      <img
+        src={src}
+        alt="display"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          borderRadius: findBorderRadius(theme),
+        }}
+      />
     </Stack>
   );
 };
 
-export default connect(null, { setThemeValue })(Frame);
+export default connect(null, { setThemeValue })(ImageFrame);

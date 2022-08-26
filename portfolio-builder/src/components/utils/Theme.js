@@ -18,6 +18,15 @@ const appTheme = createTheme({
             width: "18rem",
           },
         },
+        {
+          props: {
+            type: "text",
+            id: "text-input",
+          },
+          style: {
+            width: "18rem",
+          },
+        },
       ],
     },
     MuiSlider: {

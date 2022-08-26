@@ -1,6 +1,11 @@
 import types from "./types";
 
 const initialState = {
+  typography: {
+    allVariants: {
+      fontFamily: "Poppins, sans-serif",
+    },
+  },
   components: {
     MuiStack: {
       variants: [],

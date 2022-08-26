@@ -6,6 +6,8 @@ import { jsonTreeSearch } from "../../redux/ComponentTree/ComponentTreeActions";
 import { setThemeValue } from "../../redux/Theme/themeActions";
 import Unit from "../theme/Unit";
 import ColorPicker from "../theme/ColorPicker";
+import Flex from "../theme/Flex";
+import DataInput from "../theme/DataInput";
 
 const ThemePanel = ({
   themeOpen = false,
@@ -29,6 +31,19 @@ const ThemePanel = ({
           );
         case "Color":
           return <ColorPicker property={config[0]} node={node} key={index} />;
+        case "Flex":
+          const { alignItems, justifyContent, flexDirection } = config[1];
+          return (
+            <Flex
+              node={node}
+              {...{ alignItems, justifyContent, flexDirection }}
+              key={index}
+            />
+          );
+        case "ImageSource":
+          return <DataInput propName={config[0]} node={node} key={index} />;
+        case "TextData":
+          return <DataInput propName={config[0]} node={node} key={index} />;
         default:
           return undefined;
       }
@@ -54,11 +69,15 @@ const ThemePanel = ({
   );
 };
 
-const mapStateToProps = ({ utils, componentTree, theme }) => {
-  console.log(theme);
+const mapStateToProps = ({ utils, componentTree }) => {
   const { themeOpen, contextMenu } = utils;
-  const { metadata } = contextMenu;
+  let { metadata } = contextMenu;
   if (Object.keys(metadata).length > 0) {
+    metadata.className = metadata.className
+      .split(" ")
+      .filter((name) => !/^Mui/.test(name) && !/^css/.test(name));
+
+    metadata.className = metadata.className.join(" ");
     const node =
       metadata.className.split(" ")[0] === "body"
         ? jsonTreeSearch({
@@ -73,7 +92,6 @@ const mapStateToProps = ({ utils, componentTree, theme }) => {
             className: metadata.className,
             id: metadata.id,
           });
-
     const { styleConfig } = node;
 
     return {

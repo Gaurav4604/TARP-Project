@@ -1,4 +1,4 @@
-import { AddToQueue, Delete, Palette } from "@mui/icons-material";
+import { AddToQueue, Palette } from "@mui/icons-material";
 import {
   createTheme,
   ListItemIcon,
@@ -77,6 +77,7 @@ const ComponentContextMenu = ({
           </ListItemIcon>
           <ListItemText>Add</ListItemText>
         </MenuItem>
+
         <MenuItem
           onClick={() => {
             toggleThemePanel(true);
@@ -87,17 +88,6 @@ const ComponentContextMenu = ({
             <Palette />
           </ListItemIcon>
           <ListItemText>Edit</ListItemText>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            toggleComponentDrawer(true);
-            toggleContextMenu(false);
-          }}
-        >
-          <ListItemIcon>
-            <Delete />
-          </ListItemIcon>
-          <ListItemText>Delete</ListItemText>
         </MenuItem>
       </Menu>
     </ThemeProvider>
